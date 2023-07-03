@@ -15,7 +15,7 @@ interface Service {
     @GET("todos/1/")
     fun fetchTodos(): Call<Todo>
 
-    @GET("todos/1/")
+    @GET("todos/2/")
     fun fetchTodosSerialization(): Call<Todo>
 }
 

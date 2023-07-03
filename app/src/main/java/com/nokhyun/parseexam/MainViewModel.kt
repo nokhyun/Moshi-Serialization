@@ -1,5 +1,6 @@
 package com.nokhyun.parseexam
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,6 +32,7 @@ class MainViewModel(
     private fun fetchTodo() {
         viewModelScope.launch {
             serviceRepository.fetchTodo().collectLatest {
+                log("fetchTodo: $it")
                 _state.value = state.value.copy(result = it)
             }
         }
@@ -39,8 +41,21 @@ class MainViewModel(
     private fun fetchTodoKotlinx() {
         viewModelScope.launch {
             serviceRepository.fetchTodoSerialization().collectLatest {
+                log("fetchTodoKotlinx: $it")
                 _state.value = state.value.copy(result = it)
             }
         }
+    }
+
+    init {
+        viewModelScope.launch {
+            state.collectLatest {
+                log("collectLatest: $it")
+            }
+        }
+    }
+
+    private fun log(msg: String) {
+        Log.e("MainViewModel", msg)
     }
 }
